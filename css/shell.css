@@ -73,13 +73,22 @@ body{
   .anim,.anim::after{transition-duration:1ms}
 }
 
-/* ---------- a real phone: drop the furniture ---------- */
+/* ---------- a real phone: drop the furniture ----------
+   The screens are drawn on a fixed 360pt grid, against flat captures of
+   the real app that are 360 wide themselves, so stretching the viewport
+   to 100vw pulls the live overlays off the screenshots underneath. The
+   canvas stays 360 and is scaled up to the width of the window instead;
+   the height is the window's, divided back out of that scale, so the
+   screen still ends where the phone does. */
 @media (max-width:430px){
-  body{background:#fff;display:block;overflow:auto}
-  .stage{position:static}
-  .device{position:static;transform:none;padding:0;border-radius:0;box-shadow:none}
-  .viewport{width:100vw;height:100dvh;border-radius:0}
-  .screen{width:100vw;height:100dvh}
+  body{background:#fff;overflow:hidden}
+  .device{
+    position:absolute;left:0;top:0;
+    transform:scale(var(--fit));transform-origin:0 0;
+    padding:0;border-radius:0;box-shadow:none;
+  }
+  .viewport{border-radius:0}
+  .viewport,.screen{height:calc(100dvh / var(--fit,1))}
   .indicator{display:none}
 }
 

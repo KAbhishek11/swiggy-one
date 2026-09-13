@@ -69,9 +69,17 @@
 .ideas-list button[aria-current='true'] span{color:#fff}
 .ideas-list button:focus-visible{outline:2px solid #f15701;outline-offset:-2px}
 
-/* a real phone has no room for a floating panel beside the screen */
+/* a real phone has no room for a floating panel beside the screen, so it
+   starts shut (ideas.js) and opens over the design rather than beside it */
 @media (max-width:430px){
   .ideas{right:10px;bottom:10px;width:190px}
+  .ideas-list{max-height:52dvh;overflow-y:auto;overscroll-behavior:contain}
+  /* shut, it is a corner dot: the designs put their footnote along the
+     bottom, and a 190px panel sits right on top of it */
+  .ideas.is-shut{width:auto}
+  .ideas.is-shut .ideas-toggle{padding:0 10px}
+  .ideas.is-shut .ideas-toggle span:not(.ideas-dot){display:none}
+  .ideas.is-shut .ideas-caret{margin-left:8px}
 }
 
 /* ============================================================
