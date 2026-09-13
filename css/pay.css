@@ -1,0 +1,161 @@
+/* ============================================================
+   PAYMENT — Figma 101:54268, 360 x 1042.
+   The nav pins to the top and the pay-bar to the bottom
+   (variant 105:341 shows the bar resting at the foot of an
+   800-tall viewport); only the body between them scrolls.
+
+   This screen is set entirely in Futura -- no Futura PT --
+   so every rule below uses var(--ft): Medium 500, Bold 700.
+   ============================================================ */
+#pay{overflow:hidden;background:#f1f1f5;font-family:var(--ft);color:#20124a}
+
+.p-top{position:absolute;left:0;top:0;width:360px;z-index:2}
+.p-status{display:block;width:360px;height:34px;object-fit:cover}
+.p-nav{
+  height:45px;background:#f1f1f5;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.p-back{
+  display:flex;align-items:center;gap:12px;
+  background:none;border:0;padding:0;cursor:pointer;font:inherit;color:inherit;
+}
+.p-back svg{width:19px;height:19px;color:#20124a}
+.p-back span{font-size:16px;font-weight:700;line-height:21px;color:#20124a}
+.p-back:active{opacity:.6}
+.p-back:focus-visible{outline:2px solid #20124a;outline-offset:3px;border-radius:4px}
+.p-secure{display:flex;align-items:center;gap:5px}
+.p-secure svg{width:13px;height:13px;color:#0b8a4b}
+.p-secure span{font-size:10.5px;font-weight:500;line-height:14px;color:#0b8a4b}
+
+/* the only scrolling region, between the pinned nav and the pinned bar */
+.p-scroll{
+  position:absolute;left:0;right:0;top:79px;bottom:117px;
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.p-scroll::-webkit-scrollbar{display:none}
+.p-body{padding:12px 12px 16px;display:flex;flex-direction:column;gap:12px}
+
+/* ---------- the plan ---------- */
+.p-plan{
+  background:#fff;border-radius:16px;padding:14px;
+  display:flex;flex-direction:column;gap:10px;
+}
+.p-lockup{display:flex;align-items:center;gap:12px;height:34px}
+.p-chip{
+  width:60px;height:31px;border-radius:9px;background:#3d0048;
+  display:grid;place-items:center;flex:none;
+}
+.p-chip img{width:42px;height:17px;object-fit:contain;display:block}
+.p-lockup b{display:block;font-size:13.5px;font-weight:700;line-height:18px;color:#20124a}
+.p-lockup span{display:block;margin-top:2px;font-size:10.5px;font-weight:500;line-height:14px;color:#8a7c8a}
+
+.p-dash{
+  display:block;height:1px;
+  background:repeating-linear-gradient(90deg,#dcd3de 0 3px,transparent 3px 7px);
+}
+.p-row{display:flex;align-items:center;justify-content:space-between;gap:8px;height:17px}
+.p-row span,.p-row b{font-size:12.5px;font-weight:500;line-height:17px}
+.p-row span{color:#5c5566}
+.p-row b{font-weight:500;color:#8a7c8a;text-decoration:line-through;text-decoration-thickness:1px}
+.p-row--offer span,.p-row--offer b{color:#0b8a4b;text-decoration:none}
+.p-row--total{height:19px}
+.p-row--total span,.p-row--total b{font-size:14.5px;font-weight:700;line-height:19px;color:#20124a;text-decoration:none}
+.p-then{font-size:10.5px;font-weight:500;line-height:14px;color:#8a7c8a}
+
+/* ---------- his own last order, as the proof ---------- */
+.p-proof{
+  background:#f1fbf6;border:1px solid #d8f0e4;border-radius:12px;
+  padding:11px 13px;display:flex;align-items:center;gap:9px;
+}
+.p-proof svg{width:15px;height:15px;color:#0b7a3e;flex:none}
+.p-proof span{font-size:11.5px;font-weight:500;line-height:15px;color:#0b7a3e}
+
+.p-lab{
+  padding:6px 0 0 2px;height:19px;display:flex;align-items:center;
+  font-size:9.5px;font-weight:700;letter-spacing:.08em;line-height:13px;color:#8a7c8a;
+}
+
+/* ---------- the method lists ---------- */
+.p-card{background:#fff;border-radius:16px;overflow:hidden}
+.p-opt{
+  width:100%;border:0;background:none;font:inherit;text-align:left;cursor:pointer;
+  padding:13px 14px;display:flex;align-items:center;gap:12px;
+  transition:background .12s ease;
+}
+.p-opt+.p-opt{border-top:1px solid #eeeaf0}
+.p-opt:hover{background:#faf9fb}
+.p-opt:active{background:#f4f2f6}
+.p-opt:focus-visible{outline:2px solid #1b4dff;outline-offset:-2px}
+.p-tile{
+  width:34px;height:34px;border-radius:9px;flex:none;
+  display:grid;place-items:center;
+  background:var(--tile,#f5f2f6);
+}
+.p-tile--line{background:#fff;box-shadow:inset 0 0 0 1px #e4e0e6}
+.p-tile b{font-size:14px;font-weight:700;line-height:19px;color:var(--tint,#fff)}
+.p-tile b.sm{font-size:12px;line-height:16px}
+.p-tile svg{width:18px;height:18px;color:#3d0048}
+.p-opt-c{flex:1;min-width:0}
+.p-opt-c b{display:block;font-size:13px;font-weight:700;line-height:17px;color:#20124a}
+.p-opt-c span{display:block;margin-top:2px;font-size:10.5px;font-weight:500;line-height:14px;color:#8a7c8a}
+.p-opt--link .p-opt-c b{color:#1b4dff}
+.p-radio{
+  width:19px;height:19px;border-radius:10px;flex:none;
+  box-shadow:inset 0 0 0 1.4px #cfc8d2;
+  display:grid;place-items:center;
+}
+.p-opt[aria-checked="true"] .p-radio{box-shadow:inset 0 0 0 2px #f15701}
+.p-opt[aria-checked="true"] .p-radio::after{
+  content:'';width:9px;height:9px;border-radius:50%;background:#f15701;
+}
+.p-chev{width:14px;height:14px;flex:none;color:#8a7c8a;display:grid;place-items:center}
+.p-chev svg{width:5px;height:9px}
+
+.p-note{
+  background:#f6f2f8;border-radius:12px;padding:12px 13px;
+  display:flex;align-items:flex-start;gap:9px;
+}
+.p-note svg{width:15px;height:15px;color:#3d0048;flex:none;margin-top:.5px}
+.p-note span{font-size:10.5px;font-weight:500;line-height:15px;color:#6b6270}
+
+/* ---------- the pinned bar ---------- */
+.p-bar{
+  position:absolute;left:0;right:0;bottom:0;height:117px;z-index:2;
+  background:#fff;border-top:1px solid #e6e1e8;
+  padding:12px 12px 14px;display:flex;flex-direction:column;gap:10px;
+}
+.p-method{display:flex;align-items:center;justify-content:space-between;gap:8px;height:22px}
+.p-method-l{display:flex;align-items:center;gap:7px}
+.p-method-l .p-tile{width:22px;height:22px;border-radius:6px}
+.p-method-l .p-tile b{font-size:10px;line-height:13px}
+.p-method-l>span{font-size:11.5px;font-weight:500;line-height:15px;color:#5c5566}
+.p-change{
+  display:flex;align-items:center;gap:3px;background:none;border:0;padding:0;
+  font:inherit;font-size:11.5px;font-weight:700;line-height:15px;color:#1b4dff;cursor:pointer;
+}
+.p-change svg{width:12px;height:12px}
+.p-change:active{opacity:.6}
+
+/* the slide-to-pay: a real drag, with a click fallback */
+.p-slide{
+  position:relative;height:58px;border-radius:29px;background:#f15701;
+  padding:5px;display:flex;align-items:center;
+  overflow:hidden;touch-action:pan-y;user-select:none;cursor:grab;
+}
+.p-slide:active{cursor:grabbing}
+.p-slide-label{
+  position:absolute;left:0;right:0;text-align:center;pointer-events:none;
+  font-size:16px;font-weight:700;line-height:21px;color:#fff;
+  opacity:var(--lab,1);
+}
+.p-slide-label i{font-style:normal;font-weight:500}
+.p-knob{
+  position:relative;width:48px;height:48px;border-radius:24px;background:#fff;
+  display:grid;place-items:center;flex:none;
+  transform:translateX(var(--x,0px));
+  box-shadow:0 2px 6px rgba(120,44,0,.25);
+}
+.p-knob svg{width:20px;height:20px;color:#f15701}
+.p-slide.is-snapping .p-knob{transition:transform .26s cubic-bezier(.22,.61,.36,1)}
+.p-slide.is-snapping .p-slide-label{transition:opacity .26s ease}

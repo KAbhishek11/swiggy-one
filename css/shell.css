@@ -1,0 +1,96 @@
+/* ============================================================
+   Shell — the phone the screens live in, and the transition
+   between them. Nothing in here belongs to the product.
+   ============================================================ */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color:transparent}
+
+html,body{height:100%}
+body{
+  font-family:var(--fp);
+  background:#131315;
+  color:#fff;
+  overflow:hidden;
+}
+::selection{background:#3d0048;color:#ffdeff}
+
+/* the device is centred by transform, not by layout: at scale < 1 its
+   layout box is still full size, and a grid/flex centre would size the
+   track to that box and push the phone off the bottom of the window. */
+.stage{position:fixed;inset:0}
+
+.device{
+  --fit:1;
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%) scale(var(--fit));
+  padding:10px 10px 18px;
+  border-radius:44px;
+  background:#0d0810;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.07),
+    0 2px 0 0 rgba(255,255,255,.04) inset,
+    0 40px 90px -20px rgba(0,0,0,.85);
+}
+.viewport{
+  position:relative;
+  width:360px;height:830px;
+  border-radius:34px;
+  overflow:hidden;
+  background:#fff;
+  isolation:isolate;
+}
+.indicator{
+  width:104px;height:4px;margin:9px auto 0;
+  border-radius:2px;background:rgba(255,255,255,.28);
+}
+
+/* ---------- screens ---------- */
+.screen{
+  position:absolute;inset:0;
+  width:360px;height:830px;
+  background:#fff;
+  overflow-x:hidden;overflow-y:auto;
+  overscroll-behavior:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  will-change:transform;
+}
+.screen::-webkit-scrollbar{display:none}
+.screen[hidden]{display:none}
+.screen.is-under{transform:translateX(-22%)}
+.screen.is-over{transform:translateX(100%)}
+
+/* the shade that darkens the outgoing screen, iOS-style */
+.screen::after{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background:#000;opacity:0;
+}
+.screen.is-under::after{opacity:.16}
+
+.anim,.anim::after{transition:transform .28s cubic-bezier(.22,.61,.36,1),
+                              opacity .28s cubic-bezier(.22,.61,.36,1)}
+
+@media (prefers-reduced-motion:reduce){
+  .anim,.anim::after{transition-duration:1ms}
+}
+
+/* ---------- a real phone: drop the furniture ---------- */
+@media (max-width:430px){
+  body{background:#fff;display:block;overflow:auto}
+  .stage{position:static}
+  .device{position:static;transform:none;padding:0;border-radius:0;box-shadow:none}
+  .viewport{width:100vw;height:100dvh;border-radius:0}
+  .screen{width:100vw;height:100dvh}
+  .indicator{display:none}
+}
+
+/* placeholder for the screens that come in phase 2 and 3 */
+.stub{
+  height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  background:#faf9fb;color:#3d0048;font-family:var(--fp);text-align:center;padding:0 40px;
+}
+.stub b{font-size:22px;font-weight:600}
+.stub span{font-size:14px;color:#7e808c}
+.stub button{
+  margin-top:16px;font:inherit;font-size:13px;font-weight:600;color:#fff;background:#3d0048;
+  border:0;border-radius:8px;padding:10px 16px;cursor:pointer;
+}

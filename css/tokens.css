@@ -1,0 +1,91 @@
+/* ============================================================
+   Swiggy One — prototype tokens
+   Every value below is read off the Figma nodes in section
+   101:53185 "home banar" (file JWLnRWdiwhEDtDmWrQbimE).
+   Nothing here is invented.
+   ============================================================ */
+
+/* ---------- type ------------------------------------------------
+   Two families, exactly as the design uses them:
+     Futura PT  — the app's UI face
+     Futura     — the banner, and every string carrying a rupee
+
+   Both are installed on the presenting Mac (that is how Figma
+   renders them), so they are named directly and the OS picks the
+   weight. Jost — a geometric face cut from the same Futura
+   lineage — is bundled as the @font-face fallback for any other
+   machine. local() inside @font-face is deliberately NOT used:
+   Chrome matches it on PostScript name only, so it fails silently
+   and you get the fallback everywhere without noticing.
+
+   WEIGHTS. The installed Futura PT does not expose the faces at the
+   weights their names imply -- measured against the Figma node widths,
+   the ladder that reproduces the design is:
+     Book 400 | Medium 400 | Demi 500 | Heavy 600 | Bold 700
+   (Demi confirmed at 500 by six strings, each within 0.6px of Figma;
+   Medium has no distinct face here and renders as Book.)
+   Futura is conventional: Medium 500, Bold 700.
+
+   THE RUPEE RULE: Futura PT renders U+20B9 as a Russian ruble (₽).
+   RUP is a family that covers exactly one codepoint — the rupee —
+   and sits first in every stack. Every other character falls
+   straight past it to Futura PT.
+   ---------------------------------------------------------------- */
+@font-face{font-family:JostFB;font-style:normal;font-weight:300 700;
+  src:url('../assets/fonts/jost-var.woff2') format('woff2');
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:JostFB;font-style:normal;font-weight:300 700;
+  src:url('../assets/fonts/jost-var-ext.woff2') format('woff2');
+  unicode-range:U+0100-02BA,U+1E00-1E9F,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F}
+
+/* ₹ only — served by Futura, never by Futura PT */
+@font-face{font-family:RUP;font-style:normal;font-weight:100 600;
+  src:local('Futura-Medium'),local('Futura Medium'),
+      url('../assets/fonts/jost-var-ext.woff2') format('woff2');
+  unicode-range:U+20B9}
+@font-face{font-family:RUP;font-style:normal;font-weight:601 900;
+  src:local('Futura-Bold'),local('Futura Bold'),
+      url('../assets/fonts/jost-var-ext.woff2') format('woff2');
+  unicode-range:U+20B9}
+
+:root{
+  --fp:RUP,'Futura PT',JostFB,'Century Gothic',system-ui,sans-serif;
+  --ft:RUP,Futura,JostFB,'Century Gothic',system-ui,sans-serif;
+
+  /* ---------- host chrome (Swiggy's world, not ours) ---------- */
+  --purple:#3d0048;        /* search block, banner, active tab */
+  --purple-deep:#140019;   /* location bar */
+  --purple-strip:#1a061f;  /* tab strip behind the tabs */
+  --purple-text:#ffdeff;   /* location name */
+  --purple-sub:#af94b5;    /* address line */
+  --tab-label:#ae95b5;     /* inactive tab label */
+  --tab-label-on:#ffe2ff;  /* active tab label */
+  --underline:#f9cfff;     /* active filter underline */
+
+  /* ---------- the One banner ---------- */
+  --cta-a:#5a0868;
+  --cta-b:#800197;
+  --cta-ink:#ffd900;
+  --receipt-ink:#2b0733;
+  --chip-bg:#eaf6e2;
+  --chip-ink:#45992d;
+
+  /* ---------- content surface ---------- */
+  --ink:#02060c;
+  --ink-2:#2d2e33;
+  --muted:#7e808c;
+  --muted-2:#676a6d;
+  --placeholder:#696969;
+  --hairline:#f3f3f3;
+  --toggle-bg:#f1f0f5;
+  --accent:#f9500b;        /* TOP RATED, active segment */
+  --mic:#ff5e0f;
+  --veg:#1ba672;
+  --rating:#116a4c;
+
+  /* ---------- shape ---------- */
+  --r-banner:24px;
+  --r-card:16px;
+  --r-field:12px;
+}

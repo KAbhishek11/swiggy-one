@@ -1,0 +1,143 @@
+/* ============================================================
+   INSTAMART — Figma 90:17621, 360 x 1095 (scrolls).
+   A sibling of #home rather than a push: the tab strip swaps
+   the surface underneath it, which is what a tab does.
+
+   Everything above the rail is built; the two cards to the
+   right of the One card and the festive block below are flat
+   exports, exactly as they are in the file.
+   ============================================================ */
+#instamart{overflow:hidden;background:#fff;font-family:var(--fp);color:#06143e}
+.im-scroll{
+  position:absolute;inset:0;
+  overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.im-scroll::-webkit-scrollbar{display:none}
+
+/* ---------- 0 - 84 · header ---------- */
+.im-status{display:block;width:360px;height:33px;object-fit:cover}
+.im-hdr{
+  height:51px;background:#e3e8fb;padding:4px 12px 11px;
+  display:flex;align-items:center;gap:28px;
+}
+.im-place{width:222px;min-width:0}
+.im-name{
+  display:flex;align-items:center;
+  font-size:18px;font-weight:500;line-height:1.2;letter-spacing:-.02em;color:#06143e;
+}
+.im-name svg{width:16px;height:16px;flex:none;color:#06143e}
+.im-addr{
+  font-size:14px;font-weight:400;line-height:1;color:#595d76;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.im-hdr img.im-icons{display:block;width:86px;height:28px;margin-left:auto}
+
+/* ---------- 84 - 153 · the strip that does the switching ---------- */
+.im-tabs{position:relative;width:360px;height:69px;background:#dfe6f9}
+.im-shape,.im-line{position:absolute;top:5px;pointer-events:none}
+.im-line{left:0;width:360px;height:65px}
+.im-tab{
+  position:absolute;top:5px;left:var(--x);width:var(--w);height:64px;
+  background:none;border:0;padding:0;font:inherit;cursor:pointer;
+}
+.im-tab:focus-visible{outline:2px solid #4a5c8c;outline-offset:-3px;border-radius:8px}
+.im-tab img,.im-tab span{position:absolute;left:50%;transform:translateX(-50%)}
+.im-tab img{top:8px;object-fit:contain}
+.im-tab span{
+  top:48px;font-size:10px;font-weight:400;line-height:1;
+  color:#060a37;white-space:nowrap;
+}
+.im-tab--on span{top:46px;font-weight:500}
+.im-tab--food span{top:46px}
+
+/* ---------- 153 - 207 · search ---------- */
+.im-search{width:360px;height:54px;background:#eef2fd;padding-top:12px}
+.im-search-row{display:flex;align-items:center;gap:6px;padding:0 12px}
+.im-bar{
+  width:288px;height:42px;background:#fff;border-radius:12px;padding:0 14px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.im-q{
+  display:flex;align-items:center;gap:9px;padding-right:12px;
+  font-size:16px;font-weight:400;color:#696969;
+}
+.im-q svg{width:18px;height:18px;flex:none}
+.im-v{display:flex;align-items:center;gap:12px}
+.im-v i{width:1px;height:20px;background:#dbdbdb;display:block}
+.im-v svg{width:19px;height:19px;color:#696969}
+.im-save{
+  width:42px;height:42px;border-radius:12px;border:1px solid #484d63;background:none;
+  display:grid;place-items:center;cursor:pointer;padding:0;
+}
+.im-save svg{width:16px;height:16px;color:#484d63}
+.im-save:active{background:rgba(72,77,99,.06)}
+
+/* ---------- 207 - 574 · the card rail ---------- */
+.im-rail{
+  background:linear-gradient(180deg,#edf1fc,#fff);
+  padding:12px 12px 18px;display:flex;gap:8px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.im-rail::-webkit-scrollbar{display:none}
+.im-rail>img{flex:none;height:337px;display:block}
+
+/* ---------- the One card: the same argument, in Instamart's units ---------- */
+.im-one{
+  flex:none;width:236px;height:337px;border-radius:16px;
+  background:linear-gradient(160deg,#3366f5 0%,#2350d6 60%,#1636ae 100%);
+  padding:14px 14px 12px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  font-family:var(--ft);
+}
+.im-one-hd{display:flex;align-items:center;justify-content:space-between;height:45px}
+.im-one-hd b{display:block;font-size:20px;font-weight:700;letter-spacing:-.6px;line-height:32px;color:#ffc44c}
+.im-one-hd em{
+  display:block;font-style:normal;
+  font-size:10px;font-weight:500;letter-spacing:.6px;line-height:13px;color:#fff;
+}
+.im-one-hd img{width:74px;height:33px;object-fit:contain;display:block}
+.im-one-strip{
+  height:25px;border-radius:8px;background:rgba(255,255,255,.13);
+  display:flex;align-items:center;padding:0 10px;
+  font-size:8px;font-weight:500;letter-spacing:.5px;line-height:11px;color:rgba(255,255,255,.92);
+}
+.im-grid{display:flex;flex-direction:column;gap:6px}
+.im-grid-row{display:flex;gap:8px}
+.im-tile{
+  width:100px;height:84px;border-radius:12px;background:#fff;padding:11px 10px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.im-tile--gold{background:#ffe0a8}
+.im-tile--end{justify-content:flex-end}
+.im-tile b{font-size:20px;font-weight:700;letter-spacing:-1px;line-height:27px;color:#2b0733}
+.im-tile-l{display:flex;flex-direction:column;gap:4px}
+.im-tile-l strong{font-size:12px;font-weight:700;letter-spacing:-.2px;line-height:110%;color:#2b0733}
+.im-tile-l span{font-size:8px;font-weight:500;letter-spacing:.5px;line-height:120%;color:rgba(43,7,51,.62)}
+.im-one-ft{display:flex;flex-direction:column;align-items:center;gap:2px;height:32px}
+.im-one-cta{
+  display:flex;align-items:center;gap:1px;
+  background:none;border:0;padding:0;cursor:pointer;font-family:inherit;
+  font-size:14px;font-weight:700;line-height:19px;color:#fff;
+  transition:opacity .12s ease,transform .12s ease;
+}
+.im-one-cta:hover{opacity:.85}
+.im-one-cta:active{transform:scale(.96)}
+.im-one-cta:focus-visible{outline:2px solid #ffc44c;outline-offset:3px;border-radius:4px}
+.im-one-cta img{width:36px;height:19px;object-fit:contain;display:block}
+.im-one-ft>span{font-size:8.5px;font-weight:500;line-height:11px;color:rgba(255,255,255,.7)}
+
+.im-festive{display:block;width:360px;height:521px}
+
+/* the four tiles land in sequence, the same read as the receipt */
+@keyframes im-tile{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  #instamart.is-live .im-tile{animation:im-tile .38s cubic-bezier(.22,.61,.36,1) both}
+  #instamart.is-live .im-grid-row:nth-child(1) .im-tile:nth-child(1){animation-delay:.14s}
+  #instamart.is-live .im-grid-row:nth-child(1) .im-tile:nth-child(2){animation-delay:.21s}
+  #instamart.is-live .im-grid-row:nth-child(2) .im-tile:nth-child(1){animation-delay:.28s}
+  #instamart.is-live .im-grid-row:nth-child(2) .im-tile:nth-child(2){animation-delay:.35s}
+}
