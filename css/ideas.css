@@ -1,0 +1,426 @@
+/* ============================================================
+   IDEAS — the five alternative designs, and the switcher that
+   picks between them.
+
+   Every number below is read off Figma Section 1 (203:1118):
+     home modal            203:5026
+     home modal (blue)     203:5277
+     auto-one · B          203:2008
+     auto-one · C          203:2249
+     cart · tooltip        203:2612
+   ============================================================ */
+
+/* ============================================================
+   THE SWITCHER
+   Presentation furniture. It sits outside the phone, so it
+   borrows the shell's palette rather than the product's.
+   ============================================================ */
+.ideas{
+  position:fixed;right:20px;bottom:20px;z-index:80;
+  width:226px;
+  /* Futura, not Futura PT: Futura PT draws U+20B9 as a Russian ruble, and
+     these entries name the two free-delivery floors. See the rupee rule in
+     tokens.css. */
+  font-family:var(--ft);
+  background:#1a1a1e;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:14px;
+  box-shadow:0 18px 40px -12px rgba(0,0,0,.7);
+  overflow:hidden;
+}
+.ideas-toggle{
+  width:100%;height:38px;padding:0 12px;
+  display:flex;align-items:center;gap:8px;
+  background:none;border:0;cursor:pointer;
+  font:inherit;font-size:11px;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:#8d8b95;
+}
+.ideas-dot{width:6px;height:6px;border-radius:50%;background:#f15701;flex:none}
+.ideas-caret{
+  margin-left:auto;width:7px;height:7px;flex:none;
+  border-right:1.4px solid currentColor;border-bottom:1.4px solid currentColor;
+  transform:rotate(45deg) translate(-2px,-2px);
+  transition:transform .18s ease;
+}
+.ideas.is-shut .ideas-caret{transform:rotate(-135deg) translate(-1px,-1px)}
+.ideas.is-shut .ideas-list{display:none}
+
+.ideas-list{
+  list-style:none;padding:0 6px 6px;
+  display:flex;flex-direction:column;gap:1px;
+}
+.ideas-list button{
+  width:100%;padding:7px 8px;
+  display:grid;grid-template-columns:20px 1fr;column-gap:6px;align-items:baseline;
+  background:none;border:0;border-radius:8px;cursor:pointer;
+  font:inherit;text-align:left;color:#d7d5dd;
+  transition:background .12s ease;
+}
+.ideas-list button:hover{background:rgba(255,255,255,.05)}
+.ideas-list em{
+  grid-row:1 / span 2;align-self:center;
+  font-style:normal;font-size:10px;font-weight:500;
+  letter-spacing:.04em;color:#5f5d68;
+}
+.ideas-list span{font-size:12.5px;font-weight:500;letter-spacing:-.01em;line-height:16px}
+.ideas-list i{font-style:normal;font-size:10.5px;line-height:14px;color:#7c7a85}
+.ideas-list button[aria-current='true']{background:rgba(241,87,1,.14)}
+.ideas-list button[aria-current='true'] em{color:#f15701}
+.ideas-list button[aria-current='true'] span{color:#fff}
+.ideas-list button:focus-visible{outline:2px solid #f15701;outline-offset:-2px}
+
+/* a real phone has no room for a floating panel beside the screen */
+@media (max-width:430px){
+  .ideas{right:10px;bottom:10px;width:190px}
+}
+
+/* ============================================================
+   THE OVERLAY LAYER
+   Modals live above every screen rather than inside one, so
+   they never scroll with the feed behind them.
+   ============================================================ */
+.ideas-layer{position:absolute;inset:0;z-index:30;pointer-events:none}
+.ov{position:absolute;inset:0;pointer-events:auto;font-family:var(--ft)}
+.ov[hidden]{display:none}
+.ov-scrim{position:absolute;inset:0;background:rgba(18,0,15,.62)}
+.ov--blue .ov-scrim{background:rgba(4,16,43,.45)}
+
+/* ============================================================
+   "Just got better" — 203:5026 (Food) / 203:5277 (Instamart)
+   Same sheet twice; only the ground, the threshold and the
+   five orders change, because the two surfaces have different
+   free-delivery floors and different kinds of order.
+   ============================================================ */
+.jm{
+  position:absolute;left:0;bottom:0;width:360px;
+  padding:32px 20px 22px;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  background:var(--purple);
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -8px 34px rgba(0,0,0,.4);
+}
+/* 203:5379 — the blue runs across the sheet at 112deg; the stops are the
+   Figma gradientTransform re-mapped onto CSS's longer gradient line */
+.ov--blue .jm{
+  background:linear-gradient(112deg,#3366f5 13.2%,#2350d6 50%,#1636ae 86.8%);
+}
+.jm-close{
+  position:absolute;right:20px;top:14px;
+  width:30px;height:30px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.16);
+  display:grid;place-items:center;color:rgba(255,255,255,.85);
+}
+.jm-close svg{width:12px;height:12px}
+.jm-close:hover{background:rgba(255,255,255,.26)}
+.jm-close:focus-visible{outline:2px solid #f7c873;outline-offset:2px}
+
+.jm-eyebrow{
+  width:320px;text-align:center;
+  font-size:12px;font-weight:500;line-height:16px;color:rgba(255,255,255,.72);
+}
+.jm-head{
+  width:320px;text-align:center;
+  font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:124%;color:#fff;
+}
+.jm-head b{font-weight:700;color:#f7c873}
+
+.jm-paper{opacity:.95;filter:drop-shadow(0 10px 24px rgba(10,0,15,.5))}
+
+.jm-cta{
+  width:311px;height:57px;
+  background:#f15701;border:0;border-radius:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:2px;
+  font:inherit;font-size:18px;font-weight:700;letter-spacing:-.01em;color:#fff;
+  transition:filter .12s ease,transform .12s ease;
+}
+.jm-cta img{width:44px;height:23px;object-fit:contain;display:block}
+.jm-cta:hover{filter:brightness(1.08)}
+.jm-cta:active{transform:scale(.985)}
+.jm-fine{
+  width:320px;text-align:center;
+  font-size:9.5px;font-weight:500;line-height:13px;color:rgba(255,255,255,.45);
+}
+.ov--blue .jm-fine{font-size:10px;color:rgba(255,255,255,.7)}
+
+/* ============================================================
+   Auto-eligibility — 203:2008 (B, crossed) / 203:2249 (C, on
+   the way there). The chart is the argument: the bar is the
+   user's own money, the hairline is what one costs.
+   ============================================================ */
+.ae{
+  position:absolute;left:0;bottom:0;width:360px;
+  padding:26px 20px 22px;
+  display:flex;flex-direction:column;gap:13px;
+  background:var(--purple);
+  border-radius:22px 22px 0 0;
+}
+.ae-close{
+  position:absolute;right:20px;top:14px;
+  width:30px;height:30px;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.16);
+  display:grid;place-items:center;color:rgba(255,255,255,.85);
+}
+.ae-close svg{width:12px;height:12px}
+.ae-close:hover{background:rgba(255,255,255,.26)}
+.ae-close:focus-visible{outline:2px solid #ffd37a;outline-offset:2px}
+
+.ae-eyebrow{
+  text-align:center;
+  font-size:9.5px;font-weight:700;letter-spacing:1.1px;line-height:13px;color:#ffd37a;
+}
+.ae-head{
+  height:29px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:22px;font-weight:700;line-height:29px;color:#fff;
+}
+.ae-head img{width:56px;height:23px;object-fit:contain;display:block}
+.ae-head--wrap{
+  height:54px;display:block;text-align:center;
+  font-size:22px;line-height:27px;
+}
+
+/* ---- the chart ----
+   300 wide inside a 320 column, so it sits left and the last bar
+   stops short of the sheet edge. Bars are pinned to a common
+   baseline 116px down; the labels hang under it. */
+.ae-chart{position:relative;width:300px;height:148px}
+.ae-chart--proj{height:150px}
+.ae-tlab{
+  position:absolute;left:0;top:8px;
+  font-size:8.5px;font-weight:700;letter-spacing:.3px;line-height:11px;color:#fff;
+}
+.ae-tline{position:absolute;left:0;top:22px;width:300px;height:1px;background:rgba(255,255,255,.5)}
+.ae-chart--proj .ae-tlab{top:56px}
+.ae-chart--proj .ae-tline{top:70px}
+
+.ae-bars{list-style:none;position:absolute;inset:0}
+.ae-bars li{position:absolute;left:var(--x);top:0;bottom:0;width:40px}
+.ae-chart--proj .ae-bars li{width:54px}
+.ae-bars i{
+  position:absolute;left:0;right:0;bottom:32px;height:var(--h);
+  border-radius:6px;background:rgba(255,255,255,.26);
+}
+.ae-chart--proj .ae-bars i{bottom:34px}
+.ae-bars b{
+  position:absolute;left:0;right:0;top:123px;text-align:center;
+  font-size:8.5px;font-weight:700;line-height:11px;color:#c9afd0;
+}
+.ae-bars em{
+  position:absolute;left:0;right:0;top:136px;text-align:center;font-style:normal;
+  font-size:7.5px;font-weight:500;line-height:10px;color:#9c86a2;
+}
+/* B: the bar that crossed. C: the projection that will. */
+.ae-bars .is-over i{background:#ffd37a}
+.ae-bars .is-over b{color:#ffd37a}
+/* C only: everything but week 1 is a forecast, so it is drawn as an outline */
+.ae-chart--proj .ae-bars i{
+  background:rgba(255,255,255,.05);border:1px dashed rgba(255,255,255,.35);
+}
+.ae-chart--proj .ae-bars .is-paid i{background:rgba(255,255,255,.34);border:0}
+.ae-chart--proj .ae-bars .is-over i{background:rgba(255,211,122,.16);border-color:#ffd37a}
+
+.ae-proof{padding-top:4px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.ae-p1{font-size:12.5px;font-weight:700;line-height:17px;color:#fff;text-align:center}
+.ae-p2{font-size:11px;font-weight:500;line-height:15px;color:#dec6e2;text-align:center}
+
+.ae-cta{
+  height:55px;background:#f15701;border:0;border-radius:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font:inherit;font-size:17px;font-weight:700;line-height:23px;color:#fff;
+  transition:filter .12s ease,transform .12s ease;
+}
+.ae-cta img{width:42px;height:17px;object-fit:contain;display:block}
+.ae-cta:hover{filter:brightness(1.08)}
+.ae-cta:active{transform:scale(.985)}
+.ae-fine{text-align:center;font-size:9.5px;font-weight:500;line-height:13px;color:#b79bbf}
+
+/* ============================================================
+   CART — 203:2612. The one row is the subject, so the panel
+   points at it instead of covering the screen.
+   ============================================================ */
+#cart{background:#f3f2f7;font-family:var(--ft)}
+.ct-sheet{position:relative;width:360px;height:844px}
+.ct-bg{position:absolute;left:0;top:0;display:block;width:360px;height:844px}
+
+.ct-card{
+  position:absolute;left:12px;top:171px;width:336px;height:338px;
+  background:#fff;border-radius:16px;box-shadow:0 1px 9px rgba(0,0,0,.04);
+}
+.ct-head{
+  height:33px;padding:14px 14px 0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ct-when{display:flex;align-items:center;gap:7px}
+.ct-when b{font-size:13.5px;font-weight:700;line-height:18px;color:#20124a}
+.ct-fast{
+  padding:3px 6px;background:#e9f6f1;border-radius:5px;
+  font-size:9.5px;font-weight:700;letter-spacing:.2px;line-height:13px;color:#16794d;
+}
+.ct-count{font-size:11px;font-weight:500;line-height:15px;color:#9a96a6}
+
+.ct-items{padding:13px 14px;display:flex;flex-direction:column;gap:11px}
+.ct-rule{display:block;height:1px;background:#f1f1f6}
+.ct-list{list-style:none;display:flex;flex-direction:column;gap:11px}
+.ct-row{display:flex;align-items:center;gap:10px}
+.ct-thumb{
+  width:46px;height:46px;flex:none;overflow:hidden;
+  background:#efeff4;border:1px solid #e3e3ed;border-radius:8px;
+}
+.ct-thumb img{width:100%;height:100%;object-fit:cover;display:block;border-radius:7px}
+.ct-meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.ct-meta b{font-size:11px;font-weight:500;line-height:15px;color:#20124a}
+.ct-meta span{font-size:10.5px;font-weight:500;line-height:14px;color:#9a96a6}
+
+.ct-step{
+  flex:none;width:56px;height:30px;padding:6px 7px;
+  background:#fff;border:1px solid #d9d9e6;border-radius:8px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ct-step button{
+  background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  font-size:13px;font-weight:700;line-height:17px;color:#1b4dff;
+}
+.ct-step em{font-style:normal;font-size:12px;font-weight:700;line-height:16px;color:#20124a}
+/* the glyph is 9px wide; the target is the stepper's left half, the way it
+   is on the real control. Drawn as a pseudo-element so the row does not move. */
+.ct-step button{position:relative}
+.ct-step [data-cart-remove]::after{content:'';position:absolute;left:-7px;right:-8px;top:-6px;bottom:-6px}
+.ct-step [data-cart-remove]:focus-visible{outline:2px solid #1b4dff;outline-offset:4px;border-radius:4px}
+
+.ct-price{flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:1px}
+.ct-price s{font-size:10px;font-weight:500;line-height:13px;color:#b0acbb}
+.ct-price b{font-size:12.5px;font-weight:700;line-height:17px;color:#20124a}
+
+.ct-tile{
+  width:46px;height:46px;flex:none;
+  background:var(--purple);border-radius:8px;display:grid;place-items:center;
+}
+.ct-tile img{width:34px;height:14px;object-fit:contain;display:block}
+.ct-row--one .ct-meta{gap:4px}
+.ct-row--one .ct-meta b{font-size:12px;line-height:16px}
+.ct-waive{font-size:10px;font-weight:700;line-height:14px;color:#16794d}
+
+.ct-addwrap{padding:0 14px 14px}
+.ct-addmore{
+  height:35px;padding:8px 14px 8px 12px;
+  background:#fff;border:1px solid #dedee9;border-radius:9px;cursor:pointer;
+  display:flex;align-items:center;gap:5px;font:inherit;
+  font-size:13px;font-weight:700;line-height:17px;color:#20124a;
+}
+.ct-addmore span{font-size:11.5px;font-weight:500;line-height:15px}
+
+/* the ring and the tail: this panel is about one row, and says which */
+.ct-anchor{
+  position:absolute;left:20px;top:396px;width:320px;height:56px;
+  border-radius:10px;background:rgba(255,255,255,.07);
+  border:1.5px solid rgba(61,0,72,.5);
+}
+.ct-caret{
+  position:absolute;left:245px;top:453px;width:0;height:0;
+  border-left:11px solid transparent;border-right:11px solid transparent;
+  border-bottom:11px solid var(--purple);
+}
+
+.tt{
+  position:absolute;left:12px;top:460px;width:336px;
+  padding:14px 14px 13px;
+  background:var(--purple);border-radius:16px;
+  box-shadow:0 10px 26px rgba(31,0,41,.42);
+}
+.tt-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.tt-htext{display:flex;flex-direction:column;gap:4px}
+.tt-line1{
+  display:flex;align-items:center;gap:6px;
+  font-size:17px;font-weight:700;line-height:23px;color:#fff;
+}
+.tt-line1 img{width:41px;height:18px;object-fit:contain;display:block}
+.tt-line1 i{font-style:normal;margin-left:-5px}
+.tt-sub{font-size:11.5px;font-weight:500;line-height:15.5px;color:#dec6e2}
+.tt-close{
+  flex:none;width:22px;height:22px;border:0;border-radius:11px;cursor:pointer;
+  background:rgba(255,255,255,.14);color:#dec6e2;
+  font:inherit;font-size:11px;line-height:15px;
+  display:grid;place-items:center;
+}
+.tt-close:hover{background:rgba(255,255,255,.24)}
+.tt-close:focus-visible{outline:2px solid #ffd37a;outline-offset:2px}
+
+.tt-receipt{margin-top:12px;padding:11px 12px;background:#fdfbfe;border-radius:10px}
+.tt-lab{font-size:9px;font-weight:500;letter-spacing:.9px;line-height:12.2px;color:#9c86a2}
+.tt-rows{margin-top:9px;list-style:none;display:flex;flex-direction:column;gap:7px}
+.tt-rows li{display:flex;align-items:center;justify-content:space-between;gap:10px;height:14px}
+.tt-rows span{font-size:10px;font-weight:500;line-height:13.5px;color:var(--receipt-ink)}
+.tt-rows b{font-size:10px;font-weight:700;line-height:13.5px;color:var(--chip-ink);white-space:nowrap}
+.tt-rule{
+  display:block;margin-top:10px;height:1px;
+  background:repeating-linear-gradient(90deg,#d0c4d5 0 3px,transparent 3px 6px);
+}
+.tt-total{
+  margin-top:10px;height:27px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.tt-tlab{font-size:9.5px;font-weight:500;letter-spacing:.4px;line-height:12.8px;color:#9c86a2}
+.tt-nums{display:flex;align-items:center;gap:7px}
+.tt-free{font-size:15px;font-weight:700;line-height:20.3px;color:var(--chip-ink)}
+.tt-nums i{font-style:normal;font-size:11px;font-weight:500;line-height:15px;color:#9c86a2}
+.tt-cost{font-size:20px;font-weight:700;line-height:27px;color:#c0392b}
+.tt-nums em{font-style:normal;font-size:8.5px;font-weight:700;line-height:11.5px;color:#c0392b}
+
+.tt-actions{margin-top:12px;height:44px;display:flex;align-items:center;gap:8px}
+.tt-keep{
+  width:214px;height:43px;
+  background:#f15701;border:0;border-radius:11px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font:inherit;font-size:14px;font-weight:700;line-height:18.9px;color:#fff;
+  transition:filter .12s ease,transform .12s ease;
+}
+.tt-keep img{width:34px;height:15px;object-fit:contain;display:block}
+.tt-keep:hover{filter:brightness(1.08)}
+.tt-keep:active{transform:scale(.985)}
+.tt-remove{
+  width:86px;height:44px;
+  background:none;border:1px solid rgba(255,255,255,.28);border-radius:11px;cursor:pointer;
+  font:inherit;font-size:13px;font-weight:700;line-height:17.6px;color:#dec6e2;
+}
+.tt-remove:hover{background:rgba(255,255,255,.06)}
+.tt-fine{
+  margin-top:11px;text-align:center;opacity:.62;
+  font-size:9px;font-weight:500;letter-spacing:.2px;line-height:12.2px;color:#dec6e2;
+}
+
+/* Figma 220:7075. The scrim is under the ring, the tail and the panel, so
+   the rest of the cart drops back while the one row keeps its ring. */
+.ct-scrim{position:absolute;inset:0;background:rgba(13,5,20,.5);cursor:pointer}
+
+/* The tooltip is not the cart's resting state: it only exists once the
+   one row has been asked to leave. */
+.tt,.ct-caret,.ct-anchor,.ct-scrim{display:none}
+#cart.is-asking .tt,
+#cart.is-asking .ct-caret,
+#cart.is-asking .ct-scrim{display:block}
+#cart.is-asking .ct-anchor{display:block}
+
+/* ============================================================
+   Coming in.
+   A sheet arrives from the bottom edge and the scrim comes up
+   behind it. Nothing inside either one moves: the sheet is a
+   printed thing being slid into view, not a stack of parts
+   assembling itself. Everything here runs off display:none ->
+   block, so it replays every time an idea is picked again.
+   ============================================================ */
+@keyframes ov-scrim-in{from{opacity:0}to{opacity:1}}
+@keyframes ov-sheet-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes tt-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes tt-ring-in{from{opacity:0}to{opacity:1}}
+
+@media (prefers-reduced-motion:no-preference){
+  .ov-scrim{animation:ov-scrim-in .3s ease both}
+  .jm,.ae{animation:ov-sheet-in .34s cubic-bezier(.22,.61,.36,1) both}
+
+  /* the tooltip is anchored, so it grows out of the row rather than
+     travelling the height of the screen */
+  #cart.is-asking .tt,
+  #cart.is-asking .ct-caret{animation:tt-in .2s cubic-bezier(.22,.61,.36,1) both}
+  #cart.is-asking .ct-anchor,
+  #cart.is-asking .ct-scrim{animation:tt-ring-in .2s ease both}
+}
