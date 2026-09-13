@@ -87,5 +87,12 @@
     if (e.key === 'Escape') dismiss();
   });
 
+  /* on a phone the panel would sit on top of the design it is there to
+     switch between, so it opens shut and the toggle is the only furniture */
+  if (window.matchMedia('(max-width:430px)').matches) {
+    panel.classList.add('is-shut');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
   go('banner');
 })();

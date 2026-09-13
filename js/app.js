@@ -17,13 +17,22 @@
   /* ---------- fit the phone to whatever window it opens in ---------- */
   var device = document.getElementById('device');
   function fit() {
-    if (window.matchMedia('(max-width:430px)').matches) { device.style.removeProperty('--fit'); return; }
-    // unscaled device box: 10 + 830 + 18 padding, + 13 for the home indicator
-    var k = Math.min(1, (window.innerHeight - 32) / 871, (window.innerWidth - 32) / 380);
+    var k;
+    if (window.matchMedia('(max-width:430px)').matches) {
+      // a phone: the 360 canvas is scaled to the width of the window, and
+      // shell.css divides that back out of 100dvh to get the screen height
+      k = window.innerWidth / 360;
+    } else {
+      // unscaled device box: 10 + 830 + 18 padding, + 13 for the home indicator
+      k = Math.min(1, (window.innerHeight - 32) / 871, (window.innerWidth - 32) / 380);
+    }
     device.style.setProperty('--fit', k.toFixed(4));
     window.__fit = k;
   }
   addEventListener('resize', fit);
+  addEventListener('orientationchange', fit);
+  // the URL bar sliding away changes the height without firing resize on iOS
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', fit);
   fit();
 
   function scrollerOf(el) { return el.querySelector('[data-scroll]') || el; }
